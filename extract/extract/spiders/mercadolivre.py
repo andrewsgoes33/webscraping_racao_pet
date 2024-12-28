@@ -1,4 +1,5 @@
 import scrapy
+from datetime import datetime
 
 
 class MercadolivreSpider(scrapy.Spider):
@@ -8,7 +9,10 @@ class MercadolivreSpider(scrapy.Spider):
 
     def parse(self, response):
         
-        yield {'ad_name' : response.css('h1.ui-pdp-title::text').get(),
+        yield {'marketplace' : 'mercadolivre',
+               'ad_name' : response.css('h1.ui-pdp-title::text').get(),
                'price' : response.css('span.andes-money-amount__fraction::text').get(),
-               'cents' : response.css('span.andes-money-amount__cents.andes-money-amount__cents--superscript-36::text').get(),       
+               'cents' : response.css('span.andes-money-amount__cents.andes-money-amount__cents--superscript-36::text').get(),
+               'data_extraction' : datetime.now()      
         }
+

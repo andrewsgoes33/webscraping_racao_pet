@@ -1,4 +1,5 @@
 import scrapy
+from datetime import datetime
 
 
 class PolipetSpider(scrapy.Spider):
@@ -8,7 +9,9 @@ class PolipetSpider(scrapy.Spider):
 
     def parse(self, response):
        
-        yield {'ad_name' : response.css('strong.product__title::text').get(),
-               'price' : response.css('div.product__price h2::text').get().strip()
+        yield {'marketplace' : 'polipet',
+               'ad_name' : response.css('strong.product__title::text').get(),
+               'price' : response.css('div.product__price h2::text').get().strip(),
+               'data_extraction' : datetime.now()
         }
 

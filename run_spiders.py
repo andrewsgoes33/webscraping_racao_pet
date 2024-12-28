@@ -1,14 +1,33 @@
+import os
+import sys
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from extract.spiders.casadoprodutor import CasadoprodutorSpider
-from extract.spiders.mercadolivre import MercadolivreSpider
-from extract.spiders.magalu import MagaluSpider
-from extract.spiders.reidosanimais import ReidosanimaisSpider
-from extract.spiders.polipet import PolipetSpider
+
+# Ajusta o PYTHONPATH para incluir o diretório correto
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from extract.extract.spiders.casadoprodutor import CasadoprodutorSpider
+from extract.extract.spiders.mercadolivre import MercadolivreSpider
+from extract.extract.spiders.magalu import MagaluSpider
+from extract.extract.spiders.reidosanimais import ReidosanimaisSpider
+from extract.extract.spiders.polipet import PolipetSpider
 
 def run_spiders():
     # Obtém as configurações do projeto
     settings = get_project_settings()
+    
+    # Configura o arquivo de saída
+    settings.update({
+        'FEEDS': {
+            'data/data.jsonl': {
+                'format': 'jsonlines',
+                'encoding': 'utf8'
+            }
+        }
+    })
+    
+    # Garante que o diretório data existe
+    os.makedirs('data', exist_ok=True)
     
     # Cria uma instância do CrawlerProcess com as configurações
     process = CrawlerProcess(settings)

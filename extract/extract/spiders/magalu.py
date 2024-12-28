@@ -1,4 +1,5 @@
 import scrapy
+from datetime import datetime
 
 
 class MagaluSpider(scrapy.Spider):
@@ -8,7 +9,9 @@ class MagaluSpider(scrapy.Spider):
 
     def parse(self, response):
         
-        yield {'ad_name' : response.css('h1.sc-dcJsrY.jjGTqv::text').get(),
-               'price' : response.css('p.sc-dcJsrY.eLxcFM.sc-fmzyuX.dIyuod::text').get().strip()
+        yield {'marketplace' : 'magalu',
+               'ad_name' : response.css('h1.sc-dcJsrY.jjGTqv::text').get(),
+               'price' : response.css('p.sc-dcJsrY.eLxcFM.sc-fmzyuX.dIyuod::text').get().strip(),
+               'data_extraction' : datetime.now()
                
         }

@@ -1,4 +1,5 @@
 import scrapy
+from datetime import datetime
 
 
 class ReidosanimaisSpider(scrapy.Spider):
@@ -8,6 +9,8 @@ class ReidosanimaisSpider(scrapy.Spider):
 
     def parse(self, response):
         
-        yield {'ad_name' : response.css('div.prod__name h1::text').get(),
-               'price' : response.css('span.price span::text').get().strip()
+        yield {'marketplace': 'reidosanimais',
+               'ad_name' : response.css('div.prod__name h1::text').get(),
+               'price' : response.css('span.price span::text').get().strip(),
+               'data_extraction' : datetime.now()
         }
